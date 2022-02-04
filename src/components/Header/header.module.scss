@@ -1,0 +1,36 @@
+.header {
+  height: 5rem;
+
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  .headerNav {
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.15rem;
+    display: none;
+    transition: filter .2s;
+
+    @media (min-width: 480px) {
+      display: flex;
+      align-items: center;
+    }
+
+    &:hover {
+      filter: brightness(0.8);
+    }
+
+    svg {
+      margin-left: 0.5rem;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}

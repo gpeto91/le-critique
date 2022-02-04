@@ -1,0 +1,52 @@
+.banner {
+  object-fit: cover;
+  height: 30rem;
+  width: 100%;
+}
+
+.title {
+  font-size: 2.5rem;
+}
+
+.body {
+  p {
+    font-size: 1.25rem;
+    line-height: 1.5rem;
+  }
+
+  p + p {
+    margin-top: 2rem;
+  }
+}
+
+.filmInfo {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+.infoItem {
+  display: flex;
+  align-items: center;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  span:first-child {
+    font-size: 0.75rem;
+    color: var(--yellow-500);
+  }
+
+  svg {
+    display: none;
+
+    @media (min-width: 400px) {
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-right: 1rem;
+    }
+  }
+}

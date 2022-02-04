@@ -1,0 +1,48 @@
+.filmCard {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  
+  img {
+    position: relative;
+    object-fit: cover;
+    width: 100%;
+    top: 0;
+    transition: all .5s;
+  }
+
+  &:hover {
+    img {
+      @media (min-width: 769px) {
+        top: -50px;
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  &:hover .filmTitle {
+    @media (min-width: 769px) {
+      bottom: 0rem;
+      opacity: 1;
+    }
+  }
+}
+
+.filmTitle {
+  position: absolute;
+  bottom: 0px;
+  padding: 0.5rem;
+  background-color: var(--gray-100);
+  width: 100%;
+  color: var(--blue-700);
+  text-align: center;
+  font-weight: 700;
+  opacity: 1;
+
+  @media (min-width: 769px) {
+    position: absolute;
+    bottom: -30px;
+    transition: bottom .5s, opacity .5s;
+    opacity: 0;
+  }
+}

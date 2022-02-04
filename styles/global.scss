@@ -1,0 +1,34 @@
+:root {
+  --blue-700: #173753ff;
+
+  --yellow-500: #e5b769ff;
+
+  --gray-100: #ebf2faff;
+  --gray-700: #303041ff;
+
+  --red-500: #cd4631ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body, button, textarea, input {
+  font-family: 'Lato';
+  background-color: var(--blue-700);
+  color: var(--gray-100);
+}
+
+button {
+  cursor: pointer;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
