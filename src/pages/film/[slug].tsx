@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import { FiUser, FiClock, FiZap } from "react-icons/fi"
 
 import common from "../../../styles/common.module.scss"
+import Comment from "../../components/Comment"
 import styles from "./film.module.scss"
 
 export default function Film(): JSX.Element {
@@ -17,7 +18,7 @@ export default function Film(): JSX.Element {
 
       <img className={styles.banner} src="/images/banner.jpeg" alt="Quase famosos" />
 
-      <div className={common.content}>
+      <main className={common.content}>
         <div className={styles.filmInfo}>
           <div className={styles.infoItem}>
             <FiUser />
@@ -51,7 +52,9 @@ export default function Film(): JSX.Element {
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas amet quaerat a ipsum ea. Optio quis totam numquam minus architecto aspernatur voluptates. Ut, mollitia ab delectus quos distinctio ipsum tempore?</p>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, corrupti numquam. Qui, at ullam aperiam repudiandae illum modi ipsum quam veritatis repellendus voluptatem doloribus distinctio dolores nihil minus eos! Quasi!</p>
         </article>
-      </div>
+
+        <Comment handleSubmit={(payload) => {}} sent={null} />
+      </main>
     </>
   )
 }

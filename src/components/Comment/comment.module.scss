@@ -1,0 +1,48 @@
+.form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.textAreaContainer {
+  span {
+    display: block;
+    text-align: right;
+    font-size: .75rem;
+    transition: font-size .2s;
+
+    &.commentFull {
+      color: var(--red-500);
+      font-weight: bold;
+      font-size: .8rem;
+    }
+  }
+}
+
+.textArea {
+  width: 100%;
+  height: 8rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background-color: var(--gray-100);
+  color: var(--blue-700);
+  padding: 0.875rem;
+  font-size: 1.25rem;
+  resize: none;
+}
+
+.submitReviewBtn {
+  background-color: var(--yellow-500);
+  padding: .5rem;
+  color: var(--blue-700);
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 0;
+  margin-top: 1.5rem;
+  align-self: flex-end;
+  transition: filter .2s;
+
+  &:hover {
+    filter: brightness(0.8);
+  }
+}
