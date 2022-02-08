@@ -18,7 +18,7 @@ export default function Film(): JSX.Element {
 
       <img className={styles.banner} src="/images/banner.jpeg" alt="Quase famosos" />
 
-      <main className={common.content}>
+      <main className={`${common.content} ${common.noMenuMargin}`}>
         <div className={styles.filmInfo}>
           <div className={styles.infoItem}>
             <FiUser />

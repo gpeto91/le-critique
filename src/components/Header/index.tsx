@@ -1,19 +1,45 @@
+import { Session } from "next-auth"
 import { useSession, signOut } from "next-auth/react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
-import { FiLogIn, FiMenu } from 'react-icons/fi'
+import { FiLogIn, FiLogOut, FiMenu, FiX, FiMessageSquare } from 'react-icons/fi'
 import ModalSignIn from "../ModalSignIn"
 
 import styles from "./header.module.scss"
 interface IDropMenu {
   isOpen: boolean,
+  session: Session | null,
+  handleSignIn: () => void,
 }
 
-const DropMenu = ({ isOpen }: IDropMenu): JSX.Element => {
+const DropMenu = ({ isOpen, session, handleSignIn }: IDropMenu): JSX.Element => {
   if (isOpen) {
     return (
       <div className={styles.dropContent}>
-        <a href="">Teste</a>
+        {session && (
+          <>
+            <span>Olá, <b>{session.user?.name}</b></span>
+
+            <a onClick={() => signOut()}>
+              <FiMessageSquare />
+              Seus comentários
+            </a>
+
+            <a onClick={() => signOut()}>
+              <FiLogOut />
+              Sair
+            </a>
+          </>
+        )}
+
+        {!session && (
+          <>
+            <a onClick={() => handleSignIn()}>
+              Entrar
+              <FiLogIn />
+            </a>
+          </>
+        )}
       </div>
     )
   }
@@ -60,14 +86,21 @@ export function Header(): JSX.Element {
           )}
 
           <button className={styles.hamburguerBtn} onClick={() => setIsDropMenuOpen(!isDropMenuOpen)}>
-            <FiMenu />
+            {isDropMenuOpen ? <FiX /> : <FiMenu />}
           </button>
         </div>
 
+        <DropMenu
+          isOpen={isDropMenuOpen}
+          session={session}
+          handleSignIn={() => {
+            setIsModalOpen(true)
+            setIsDropMenuOpen(false)
+          }}
+        />
+
         <ModalSignIn isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </header>
-
-      <DropMenu isOpen={isDropMenuOpen} />
     </>
   )
 }

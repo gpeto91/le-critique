@@ -57,15 +57,16 @@
 
 .modalBody {
   padding: var(--modal-padding);
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   margin: 3rem 0;
 }
 
 .modalProvider {
   display: flex;
   align-items: center;
+  justify-content: center;
   color: var(--blue-700);
   border: 1px solid var(--blue-700);
   padding: 0 .5rem;
