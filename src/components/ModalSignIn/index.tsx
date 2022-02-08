@@ -1,11 +1,12 @@
 import { FiX } from "react-icons/fi"
 import { FaGoogle, FaFacebook } from "react-icons/fa"
+import { useContext } from "react"
+import { signIn } from "next-auth/react"
+
 import Portal from "../../hoc/Portal"
+import AppContext from "../../context/AppProvider"
 
 import styles from "./modalSignIn.module.scss"
-import { useContext, useEffect } from "react"
-import AppContext from "../../context/AppProvider"
-import { ProviderType } from "next-auth/providers"
 
 type ModalSignInProps = {
   isOpen: boolean;
@@ -13,44 +14,36 @@ type ModalSignInProps = {
 }
 
 export default function ModalSignIn({ isOpen, onClose }: ModalSignInProps) {
-  const { state, setState } = useContext(AppContext)
-  
-  useEffect(() => {
-    console.log(Object.values(state.providers))
-  }, [])
+  const { state } = useContext(AppContext)
+  const providers = state.providers
+
+  const handleSignIn = (providerId: string): void => {
+    signIn(providerId)
+  }
 
   return (
     <Portal>
-      <div className={`${styles.modalWrapper} ${isOpen ? styles.modalOpen : ''}`} onClick={() => onClose()}>
+      <div className={`${styles.modalWrapper} ${isOpen ? styles.modalOpen : ''}`}>
         <div className={styles.modal}>
           <div className={styles.modalHeader}>
-            <h2>header</h2>
+            <h2>Faça o login</h2>
 
-            <button type="button">
+            <button type="button" onClick={() => onClose()}>
               <FiX />
             </button>
           </div>
 
           <div className={styles.modalBody}>
-            {Object.values(state.providers).map((provider) => (
-              <div key={provider.id} className={styles.modalProvider}>
+            {providers.map((provider): JSX.Element => (
+              <button type="button" key={provider.id} className={styles.modalProvider} onClick={() => handleSignIn(provider.id)}>
                 {provider.name === 'Google' ? <FaGoogle /> : <FaFacebook />}
                 <p>Login com {provider.name}</p>
-              </div>
+              </button>
             ))}
-
-            {/* <div>
-              <FaGoogle />
-              <p>login com Google</p>
-            </div> */}
-          </div>
-
-          <div className={styles.modalFooter}>
-            <p>footer</p>
           </div>
         </div>
 
-        <div className={styles.modalOverlay} />
+        <div className={styles.modalOverlay} onClick={() => onClose()} />
       </div>
     </Portal>
   )

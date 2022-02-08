@@ -1,16 +1,14 @@
-import type { NextPage, NextPageContext } from 'next'
-import { ProviderType } from 'next-auth/providers'
 import { getProviders } from 'next-auth/react'
 import { useContext, useEffect } from 'react'
-import common from "../../styles/common.module.scss"
 import { FilmCard } from '../components/FilmCard'
 
-import AppContext from '../context/AppProvider'
+import AppContext, { IProvider } from '../context/AppProvider'
 
+import common from "../../styles/common.module.scss"
 import styles from './home.module.scss'
 
 type HomeProps = {
-  providers: ProviderType
+  providers: IProvider[];
 }
 
 const Home = ({ providers }: HomeProps) => {
@@ -39,10 +37,16 @@ const Home = ({ providers }: HomeProps) => {
 
 export default Home
 
-export async function getServerSideProps<GetServerSideProps>() {
+export async function getServerSideProps() {
   const providers = await getProviders()
 
+  const formatedProviders = providers && Object.values(providers).map(provider => ({
+    id: provider.id,
+    name: provider.name,
+    type: provider.type
+  }))
+
   return {
-    props: { providers }
+    props: { providers: formatedProviders }
   }
 }

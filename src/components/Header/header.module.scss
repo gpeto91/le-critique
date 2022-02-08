@@ -33,4 +33,19 @@
       height: 20px;
     }
   }
+
+  .hamburguerBtn {
+    display: block;
+    border: 0;
+    background-color: transparent;
+
+    @media (min-width: 767px) {
+      display: none;
+    }
+
+    svg {
+      width: 30px;
+      height: 30px;
+    }
+  }
 }

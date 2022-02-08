@@ -1,8 +1,15 @@
 import { ProviderType } from "next-auth/providers"
+import { getProviders } from "next-auth/react"
 import { createContext, Dispatch, FC, SetStateAction, useState } from "react"
 
+export interface IProvider {
+  id: string,
+  name: string,
+  type: string,
+}
+
 type AppType = {
-  providers: ProviderType | null
+  providers: IProvider[]
 }
 
 type PropsAppContext = {
@@ -12,7 +19,7 @@ type PropsAppContext = {
 
 const DEFAULT_VALUE: PropsAppContext = {
   state: {
-    providers: null
+    providers: []
   },
   setState: () => {}
 }
