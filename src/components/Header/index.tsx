@@ -1,8 +1,8 @@
 import { Session } from "next-auth"
 import { useSession, signOut } from "next-auth/react"
 import Link from "next/link"
-import { useEffect, useState } from "react"
-import { FiLogIn, FiLogOut, FiMenu, FiX, FiMessageSquare } from 'react-icons/fi'
+import { ReactElement, ReactNode, Ref, useEffect, useRef, useState } from "react"
+import { FiLogIn, FiLogOut, FiMenu, FiX, FiMessageSquare, FiChevronDown, FiChevronUp } from 'react-icons/fi'
 import ModalSignIn from "../ModalSignIn"
 
 import styles from "./header.module.scss"
@@ -10,36 +10,59 @@ interface IDropMenu {
   isOpen: boolean,
   session: Session | null,
   handleSignIn: () => void,
+  closeRequest: () => void,
 }
 
-const DropMenu = ({ isOpen, session, handleSignIn }: IDropMenu): JSX.Element => {
+const DropMenu = ({ isOpen, session, handleSignIn, closeRequest }: IDropMenu): JSX.Element => {
+  const dropdown = useRef(null)
+
+  /**
+   * close dropdown menu when click outside
+   */
+   useEffect(() => {
+    if (!isOpen) return
+
+    function handleClickOutside(evt: MouseEvent) {
+      console.log("a")
+      if (dropdown.current && !dropdown.current.contains(evt.target)) {
+        closeRequest()
+      }
+    }
+
+    window.addEventListener("click", handleClickOutside)
+
+    return () => window.removeEventListener("click", handleClickOutside)
+  }, [isOpen])
+
   if (isOpen) {
     return (
-      <div className={styles.dropContent}>
-        {session && (
-          <>
-            <span>Olá, <b>{session.user?.name}</b></span>
+      <div className={styles.dropContent} ref={dropdown}>
+        <div>
+          {session && (
+            <>
+              <span>Olá, <b>{session.user?.name}</b></span>
 
-            <a onClick={() => signOut()}>
-              <FiMessageSquare />
-              Seus comentários
-            </a>
+              <a onClick={() => signOut()}>
+                <FiMessageSquare />
+                Seus comentários
+              </a>
 
-            <a onClick={() => signOut()}>
-              <FiLogOut />
-              Sair
-            </a>
-          </>
-        )}
+              <a onClick={() => signOut()}>
+                <FiLogOut />
+                Sair
+              </a>
+            </>
+          )}
 
-        {!session && (
-          <>
-            <a onClick={() => handleSignIn()}>
-              Entrar
-              <FiLogIn />
-            </a>
-          </>
-        )}
+          {!session && (
+            <>
+              <a onClick={() => handleSignIn()}>
+                Entrar
+                <FiLogIn />
+              </a>
+            </>
+          )}
+        </div>
       </div>
     )
   }
@@ -53,6 +76,9 @@ export function Header(): JSX.Element {
   const [isDropMenuOpen, setIsDropMenuOpen] = useState<boolean>(false)
   const { data: session } = useSession()
 
+  /**
+   * close signin modal only after login flow has ended
+   */
   useEffect(() => {
     setIsModalOpen(false)
   }, [session])
@@ -69,9 +95,9 @@ export function Header(): JSX.Element {
 
           {session && (
             <Link href="/">
-              <a className={styles.headerNav} onClick={() => signOut()}>
+              <a className={styles.headerNav} onClick={() => setIsDropMenuOpen(!isDropMenuOpen)}>
                 {session.user?.name}
-                <FiLogIn />
+                {isDropMenuOpen ? <FiChevronUp /> : <FiChevronDown />}
               </a>
             </Link>
           )}
@@ -97,6 +123,7 @@ export function Header(): JSX.Element {
             setIsModalOpen(true)
             setIsDropMenuOpen(false)
           }}
+          closeRequest={() => setIsDropMenuOpen(false)}
         />
 
         <ModalSignIn isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
