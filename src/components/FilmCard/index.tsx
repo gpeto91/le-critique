@@ -1,8 +1,12 @@
 import styles from './filmCard.module.scss'
 
-export function FilmCard(): JSX.Element {
+type FilmCardProps = {
+  go: () => void;
+}
+
+export function FilmCard({ go }: FilmCardProps): JSX.Element {
   return (
-    <div className={styles.filmCard}>
+    <div className={styles.filmCard} onClick={() => go()}>
       <div>
         <img src="/images/almost-famous.jpg" alt="Quase famosos" />
       </div>

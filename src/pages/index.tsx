@@ -6,6 +6,8 @@ import AppContext, { IProvider } from '../context/AppProvider'
 
 import common from "../../styles/common.module.scss"
 import styles from './home.module.scss'
+import Head from 'next/head'
+import { useRouter } from 'next/router'
 
 type HomeProps = {
   providers: IProvider[];
@@ -13,6 +15,7 @@ type HomeProps = {
 
 const Home = ({ providers }: HomeProps) => {
   const { state, setState } = useContext(AppContext)
+  const router = useRouter()
 
   useEffect(() => {
     setState({
@@ -22,16 +25,21 @@ const Home = ({ providers }: HomeProps) => {
   }, [])
 
   return (
-    <main className={common.content}>
-      <div className={styles.grid}>
-        <FilmCard />
-        <FilmCard />
-        <FilmCard />
-        <FilmCard />
-        <FilmCard />
-        <FilmCard />
-      </div>
-    </main>
+    <>
+      <Head>
+        <title>Le.Critique</title>
+      </Head>
+      <main className={common.content}>
+        <div className={styles.grid}>
+          <FilmCard go={() => router.push('/film/asdad-asdasd-asdasd')} />
+          <FilmCard go={() => router.push('/film/asdad-asdasd-asdasd')} />
+          <FilmCard go={() => router.push('/film/asdad-asdasd-asdasd')} />
+          <FilmCard go={() => router.push('/film/asdad-asdasd-asdasd')} />
+          <FilmCard go={() => router.push('/film/asdad-asdasd-asdasd')} />
+          <FilmCard go={() => router.push('/film/asdad-asdasd-asdasd')} />
+        </div>
+      </main>
+    </>
   )
 }
 
