@@ -14,7 +14,7 @@ interface IDropMenu {
 }
 
 const DropMenu = ({ isOpen, session, handleSignIn, closeRequest }: IDropMenu): JSX.Element => {
-  const dropdown = useRef(null)
+  const dropdown = useRef<HTMLDivElement | null>(null)
 
   /**
    * close dropdown menu when click outside
@@ -23,8 +23,9 @@ const DropMenu = ({ isOpen, session, handleSignIn, closeRequest }: IDropMenu): J
     if (!isOpen) return
 
     function handleClickOutside(evt: MouseEvent) {
-      console.log("a")
-      if (dropdown.current && !dropdown.current.contains(evt.target)) {
+      const target = evt.target as Node
+      
+      if (dropdown.current && !dropdown.current.contains(target)) {
         closeRequest()
       }
     }
