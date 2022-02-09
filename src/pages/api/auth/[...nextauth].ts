@@ -1,6 +1,7 @@
 import NextAuth from "next-auth"
 import FacebookProvider from "next-auth/providers/facebook"
 import GoogleProvider from "next-auth/providers/google"
+import { IUser, User, UserType } from "../../../services/Database/User"
 
 export default NextAuth({
   providers: [
@@ -16,10 +17,14 @@ export default NextAuth({
   ],
   callbacks: {
     signIn: async ({ user, account }) => {
-      console.log("USER:", user)
-      console.log("ACCOUNT:", account)
+      const usuario = new User()
 
-      //TODO integrar banco de dados
+      const userFormatted: UserType = {
+        name: user.name as string,
+        email: user.email as string,
+      }
+
+      await usuario.create(userFormatted)
       
       return true
     }
