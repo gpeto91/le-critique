@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useState } from "react"
@@ -8,6 +9,7 @@ import Comment from "../../components/Comment"
 import styles from "./film.module.scss"
 
 export default function Film(): JSX.Element {
+  const { data: session } = useSession()
   const [commentSent, setCommentSent] = useState<boolean | null>(null)
   const router = useRouter()
   const { slug } = router.query
@@ -55,16 +57,23 @@ export default function Film(): JSX.Element {
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, corrupti numquam. Qui, at ullam aperiam repudiandae illum modi ipsum quam veritatis repellendus voluptatem doloribus distinctio dolores nihil minus eos! Quasi!</p>
         </article>
 
-        <Comment
-          sent={commentSent}
-          handleSubmit={(payload) => {
-            setCommentSent(true)
+        {session && (
+          <Comment
+            sent={commentSent}
+            handleSubmit={(payload) => {
+              setCommentSent(true)
 
-            setTimeout(() => {
-              setCommentSent(null)
-            }, 500)
-          }}
-        />
+              setTimeout(() => {
+                setCommentSent(null)
+              }, 500)
+            }}
+          />
+        )}
+
+        {!session && (
+          <h2>Login to comment</h2>
+        )}
+
       </main>
     </>
   )
