@@ -47,7 +47,7 @@ export default function Comment({ handleSubmit, sent }: CommentProps): JSX.Eleme
           <textarea className={styles.textArea} value={comment} onChange={event => event.target.value.length <= 250 && setComment(event.target.value)}></textarea>
           <span className={comment.length === 250 ? styles.commentFull : ''}>{comment.length}/250</span>
         </div>
-        <button className={styles.submitReviewBtn} type="submit">Comment as anom</button>
+        <button className={styles.submitReviewBtn} type="submit">Comment</button>
       </form>
 
       <ToastContainer limit={3} />
