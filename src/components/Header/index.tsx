@@ -95,21 +95,17 @@ export function Header(): JSX.Element {
           </Link>
 
           {session && (
-            <Link href="/">
               <a className={styles.headerNav} onClick={() => setIsDropMenuOpen(!isDropMenuOpen)}>
                 {session.user?.name}
                 {isDropMenuOpen ? <FiChevronUp /> : <FiChevronDown />}
               </a>
-            </Link>
           )}
 
           {!session && (
-            <Link href="/">
               <a className={styles.headerNav} onClick={() => setIsModalOpen(true)}>
                 Entrar
                 <FiLogIn />
               </a>
-            </Link>
           )}
 
           <button className={styles.hamburguerBtn} onClick={() => setIsDropMenuOpen(!isDropMenuOpen)}>
