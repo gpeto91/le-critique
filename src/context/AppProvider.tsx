@@ -9,7 +9,7 @@ export interface IProvider {
 }
 
 type AppType = {
-  providers: IProvider[]
+  providers: IProvider[] | null
 }
 
 type PropsAppContext = {
