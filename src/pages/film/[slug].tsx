@@ -2,15 +2,22 @@ import { useSession } from "next-auth/react"
 import Head from "next/head"
 import { useRouter } from "next/router"
 import { useState } from "react"
+import { useAppSelector, useAppDispatch } from "../../store/hooks"
+import { add, selectComments } from "../../store/slices/commentSlice"
+import type { Comment as CommentType } from "../../store/slices/commentSlice"
 import { FiUser, FiClock, FiZap } from "react-icons/fi"
 
 import common from "../../../styles/common.module.scss"
 import Comment from "../../components/Comment"
 import styles from "./film.module.scss"
+import { format, formatISO } from "date-fns"
 
 export default function Film(): JSX.Element {
   const { data: session } = useSession()
   const [commentSent, setCommentSent] = useState<boolean | null>(null)
+  const dispatch = useAppDispatch()
+  const comments = useAppSelector(selectComments)
+
   const router = useRouter()
   const { slug } = router.query
 
@@ -61,6 +68,14 @@ export default function Film(): JSX.Element {
           <Comment
             sent={commentSent}
             handleSubmit={(payload) => {
+              const obj: CommentType = {
+                author: session.user?.name as string,
+                text: payload.text,
+                created_at: formatISO(new Date()),
+                filmSlug: slug as string,
+              }
+
+              dispatch(add(obj))
               setCommentSent(true)
 
               setTimeout(() => {
@@ -73,6 +88,14 @@ export default function Film(): JSX.Element {
         {!session && (
           <h2>Login to comment</h2>
         )}
+
+        {comments.map(comment => (
+          <div key={comment.filmSlug}>
+            <span>{comment.author}</span>
+            <p>{comment.text}</p>
+            <span>{format(new Date(comment.created_at), "dd/MM/yyyy")}</span>
+          </div>
+        ))}
 
       </main>
     </>

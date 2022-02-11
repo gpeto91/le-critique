@@ -6,7 +6,6 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import styles from "./comment.module.scss"
 
 type ReviewPayload = {
-  author: string;
   text: string;
 }
 
@@ -31,7 +30,6 @@ export default function Comment({ handleSubmit, sent }: CommentProps): JSX.Eleme
     evt.preventDefault()
 
     const obj: ReviewPayload = {
-      author: "anom",
       text: comment,
     }
 

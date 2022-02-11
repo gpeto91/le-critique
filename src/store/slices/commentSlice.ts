@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../store'
 
-type Comment = {
-  id: string | null;
+export type Comment = {
+  id?: string | null;
   author: string;
   text: string;
   created_at: string;
