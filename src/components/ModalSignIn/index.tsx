@@ -34,7 +34,7 @@ export default function ModalSignIn({ isOpen, onClose }: ModalSignInProps) {
           </div>
 
           <div className={styles.modalBody}>
-            {providers.map((provider): JSX.Element => (
+            {providers && providers.map((provider): JSX.Element => (
               <button type="button" key={provider.id} className={styles.modalProvider} onClick={() => handleSignIn(provider.id)}>
                 {provider.name === 'Google' ? <FaGoogle /> : <FaFacebook />}
                 <p>Login com {provider.name}</p>
